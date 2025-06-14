@@ -12,11 +12,16 @@
 	</body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+  @import "tailwindcss";
+  html,
+  body {
+    background: #111;
+    height: 300vh;
+    overflow-x: hidden; /* Desactivar scroll horizontal */
+    overscroll-behavior: none; /* Desactivar Overscroll para que trackpad no generé fallos de scroll en animaciones */
+    color: white;
+    margin: 0;
+    width: 100%;
+  }
 </style>
