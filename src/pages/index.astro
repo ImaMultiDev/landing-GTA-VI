@@ -7,23 +7,25 @@ import PlayButtonIcon from "@/assets/play-button.svg"
 import LogoCutted from "@/assets/logo-cutted.svg"
 ---
 <Layout>
-	<section>
-		<picture 
-			id="hero-key"
-			class="h-screen scale-125 block overflow-hidden fixed"
-		>
-			<img 
-				id="hero-key-logo" 
-				src={HeroKeyLogo.src} 
-				class="absolute w-full h-full object-cover" 
-			/>
-			<img 
-				id="hero-key-background" 
-				src={HeroKeyBackground.src} 
-				class="w-full h-full object-cover" 
-			/>
-		</picture>
-	</section>
+	<div id="logo-mask" class="fixed top-0 w-full h-screen">
+		<section>
+			<picture 
+				id="hero-key"
+				class="h-screen scale-125 block overflow-hidden fixed"
+			>
+				<img 
+					id="hero-key-logo" 
+					src={HeroKeyLogo.src} 
+					class="absolute w-full h-full object-cover" 
+				/>
+				<img 
+					id="hero-key-background" 
+					src={HeroKeyBackground.src} 
+					class="w-full h-full object-cover" 
+				/>
+			</picture>
+		</section>
+	</div>
 	<div
 	class="fixed flex flex-col items-center justify-between h-screen px-20 py-16 w-full">
 		<header class="flex justify-between w-full">
@@ -50,3 +52,38 @@ import LogoCutted from "@/assets/logo-cutted.svg"
 		</footer>
 	</div>
 </Layout>
+
+<style>
+	#logo-mask {
+		background: white;
+		mask-image: url("/logo-stack.svg");
+		mask-position: center 50%;  /* EjeX centrado, EjeY 50% */
+		mask-repeat: no-repeat; /* La mascara no se repite */
+		mask-size: clamp(5000vh, 3500%, 0vh); /* Size (mínimo, preferido, máximo) */
+	}
+</style>
+
+<script>
+	import {gsap} from "gsap"
+	// console.log ("GSAP Versión: ", gsap.version)
+	import { ScrollTrigger } from "gsap/all" // Pluggin para escuchar el Scroll
+
+	gsap.registerPlugin(ScrollTrigger) // Registrar Pluggin de GSAP
+
+	const tl = gsap.timeline({	// Creamos el TimeLine
+		ease: "power2.out",
+		scrollTrigger: {
+			scrub: 1	// Sincroniza el Scroll con las animaciones, scrub: true sería sincro inmediata
+
+		}	
+	})
+
+	tl
+		.to("#hero-key",{scale:1.1, duration:1})
+		.to("#hero-key-logo", {opacity:0}, "<")
+		.to("#hero-footer",{opacity:0}, "<")
+		.to("#hero-play-button",{opacity:0}, "<")
+		.to("#logo-mask", {maskSize: "clamp(20vh, 25%, 30vh)"}, 0.2)
+		.to("#hero-key",{opacity:0, duration:0.2}, 0.4)
+
+</script>
